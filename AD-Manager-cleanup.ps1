@@ -6,8 +6,6 @@ $Global:recipients = @()
 
 #
 $sendlist = @()
-#get members of empty group to send emails to
-#function GetEmptyGroupsMembers{
 
     #get all groups where the manager field is empty
     $nmgroups = Get-ADGroup -filter * -SearchBase "CN of OU to seach from" -Properties * | where ManagedBy -like ''
@@ -30,9 +28,6 @@ $sendlist = @()
             }        
         }
         Catch [Microsoft.ActiveDirectory.Management.ADIdentityNotFoundException]{
-            write-host "Caught One!"
-            #$gname = get-adgroup -Filter * | where name -eq $g.name
-            #get members of group using sam account name
             $objects = Get-ADGroupMember $g.SamAccountName
             $recipients = @()
             foreach ($r in $objects){
@@ -40,8 +35,6 @@ $sendlist = @()
             }
         }
         Catch [Microsoft.ActiveDirectory.Management.ADException]{
-            #if still gettings uses write out the name of the group
-            write-host $g.name
             continue
         }        
         finally{
