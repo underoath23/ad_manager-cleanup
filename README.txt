@@ -1,0 +1,1 @@
+Find groups with no manager set in AD and creates objects that list the members of the group together.
